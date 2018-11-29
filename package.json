@@ -1,7 +1,7 @@
 {
   "name": "pretty-sort",
   "description": "sort string with awareness to tailing numeric value",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
