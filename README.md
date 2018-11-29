@@ -1,4 +1,5 @@
 # pretty-sort
+[![npm Package Version](https://img.shields.io/npm/v/pretty-sort.svg?maxAge=2592000)](https://www.npmjs.com/package/pretty-sort)
 
 sort string with awareness to tailing numeric value
 
