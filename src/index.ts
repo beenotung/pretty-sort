@@ -1,8 +1,10 @@
+/** @description helper function */
 export function compare (a, b): 1 | 0 | -1 {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
 /**
+ * @description helper function
  * @return [numeric value, offset of last non-numeric char]
  * */
 export let tailing_value = (s: string): undefined | [number, number] => {
@@ -23,6 +25,7 @@ export let tailing_value = (s: string): undefined | [number, number] => {
   return [acc, 0];
 };
 
+/** @description helper function */
 export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
   if (a_str.length === 0 || b_str.length === 0) {
     return compare(a_str, b_str);
@@ -50,12 +53,14 @@ export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
   return compare(a_val, b_val);
 }
 
+/** @description main sorting function */
 export function pretty_sort (xs: string[]): string[] {
   return xs.sort(pretty_compare);
 }
 
 const ori_tailing_value = tailing_value;
 
+/** @description speed up sorting by caching the comparison result, it consumes some memory */
 export function enable_tailing_value_memorize () {
   const mem = {};
   tailing_value = (s: string) => {
@@ -66,6 +71,7 @@ export function enable_tailing_value_memorize () {
   };
 }
 
+/** @description free up the memory used to cache comparison result */
 export function disable_tailing_value_memorize () {
   tailing_value = ori_tailing_value;
 }
