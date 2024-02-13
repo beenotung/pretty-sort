@@ -15,9 +15,10 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "directories": {
-    "test": "test"
-  },
+  "files": [
+    "dist/index.d.ts",
+    "dist/index.js"
+  ],
   "scripts": {
     "test": "npm run rawtest",
     "prebuild": "npm run format",
