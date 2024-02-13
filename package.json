@@ -2,7 +2,17 @@
   "name": "pretty-sort",
   "version": "0.0.2",
   "description": "sort string with awareness to tailing numeric value",
-  "keywords": [],
+  "keywords": [
+    "sort",
+    "pretty",
+    "readability",
+    "human-friendly",
+    "string-comparison",
+    "semantic",
+    "sorting",
+    "comparison",
+    "string"
+  ],
   "author": "Beeno Tung",
   "license": "BSD-2-Clause",
   "repository": {
