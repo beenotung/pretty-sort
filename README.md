@@ -22,8 +22,8 @@ To sort below folder name:
     Group 10
     Group 11
     Group 12
-    
-If we sort it by by default string comparision, we will get:
+
+If we sort it by by default string comparison, we will get:
 
     Class 1
     Class 10
