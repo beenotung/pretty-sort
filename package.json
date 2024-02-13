@@ -1,6 +1,6 @@
 {
   "name": "pretty-sort",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "sort string with awareness to tailing numeric value",
   "keywords": [
     "sort",
