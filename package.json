@@ -1,8 +1,23 @@
 {
   "name": "pretty-sort",
-  "description": "sort string with awareness to tailing numeric value",
   "version": "0.0.2",
+  "description": "sort string with awareness to tailing numeric value",
+  "keywords": [],
+  "author": "Beeno Tung",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beenotung/pretty-sort.git"
+  },
+  "homepage": "https://github.com/beenotung/pretty-sort#readme",
+  "bugs": {
+    "url": "https://github.com/beenotung/pretty-sort/issues"
+  },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "npm run rawtest",
     "prebuild": "npm run format",
@@ -13,17 +28,7 @@
     "rawtest": "ts-node test/index.ts",
     "prepublishOnly": "npm run rawtest && npm run build"
   },
-  "keywords": [],
-  "author": "Beeno Tung",
-  "license": "BSD-2-Clause",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/beenotung/pretty-sort.git"
-  },
-  "bugs": {
-    "url": "https://github.com/beenotung/pretty-sort/issues"
-  },
-  "homepage": "https://github.com/beenotung/pretty-sort#readme",
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^8.10.38",
     "prettier": "^1.15.2",
@@ -31,10 +36,5 @@
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.1.6"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "dependencies": {},
-  "types": "dist/index.d.ts"
+  }
 }
