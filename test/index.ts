@@ -62,3 +62,25 @@ test('Multi-Groups', [
   'Group 11',
   'Group 12',
 ]);
+
+test('Filenames', [
+  '3.txt',
+  '4.txt',
+  '7.txt',
+  '9.txt',
+  '11.txt',
+  '16.txt',
+  '17.txt',
+  '19.txt',
+  '25.txt',
+  '28.txt',
+]);
+
+test('Numbers in middle', [
+  'Student 1 Submission',
+  'Student 2 Submission',
+  'Student 3 Submission',
+  'Student 10 Submission',
+  'Student 11 Submission',
+  'Student 12 Submission',
+]);

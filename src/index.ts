@@ -31,6 +31,8 @@ export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
     return compare(a_str, b_str);
   }
 
+  [a_str, b_str] = remove_common_suffix(a_str, b_str);
+
   const a_tail = tailing_value(a_str);
   if (!a_tail) {
     return compare(a_str, b_str);
@@ -51,6 +53,22 @@ export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
   }
 
   return compare(a_val, b_val);
+}
+
+// e.g. remove ".txt" suffix
+function remove_common_suffix (a: string, b: string) {
+  const n = Math.min(a.length, b.length);
+  let tail = 0;
+  for (let i = 0; i < n; i++) {
+    if (a[a.length - 1 - i] === b[b.length - 1 - i]) {
+      tail++;
+    } else {
+      break;
+    }
+  }
+  a = a.substring(0, a.length - tail);
+  b = b.substring(0, b.length - tail);
+  return [a, b];
 }
 
 /** @description main sorting function */
