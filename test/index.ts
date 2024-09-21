@@ -1,7 +1,13 @@
-import { disable_tailing_value_memorize, enable_tailing_value_memorize, pretty_sort } from '../src';
+import {
+  disable_tailing_value_memorize,
+  enable_tailing_value_memorize,
+  pretty_sort,
+} from '../src';
 
 function test(name: string, target: string[]) {
-  let subject = target.map(x => x).sort((a, b) => Math.random() < .5 ? 1 : -1);
+  let subject = target
+    .map(x => x)
+    .sort((a, b) => (Math.random() < 0.5 ? 1 : -1));
 
   let result = pretty_sort(subject);
   if (target.toString() === result.toString()) {
@@ -32,6 +38,7 @@ test('Groups', [
 ]);
 
 test('StudentIDs', [
+  // prettier-force-new-line
   '12345678d',
   '23456789d',
   '34567890d',

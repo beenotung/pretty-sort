@@ -37,7 +37,7 @@
     "test": "npm run rawtest",
     "prebuild": "npm run format",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "postformat": "tslint -p . --fix",
     "pretest": "npm run build",
     "rawtest": "ts-node test/index.ts",
