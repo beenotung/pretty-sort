@@ -40,7 +40,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "postformat": "tslint -p . --fix",
     "pretest": "npm run build",
-    "rawtest": "ts-node test/index.ts",
+    "rawtest": "ts-node test/index.ts && ts-node test/parse_number.ts",
     "prepublishOnly": "npm run rawtest && npm run build"
   },
   "dependencies": {},

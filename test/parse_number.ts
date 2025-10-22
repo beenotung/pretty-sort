@@ -33,3 +33,7 @@ test('1.2.3', 1);
 test('0123', 123);
 
 console.log({ passed, failed });
+
+if (failed !== 0) {
+  process.exit(1);
+}
