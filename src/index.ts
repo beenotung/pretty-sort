@@ -27,43 +27,61 @@ export let tailing_value = (s: string): undefined | [number, number] => {
 
 /** @description helper function */
 export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
-  const a_num = parseFloat(a_str);
-  const b_num = parseFloat(b_str);
-  if (!isNaN(a_num) && !isNaN(b_num)) {
-    if (a_num < b_num) {
-      return -1;
-    }
-    if (a_num > b_num) {
-      return 1;
-    }
-  }
-
-  if (a_str.length === 0 || b_str.length === 0) {
-    return compare(a_str, b_str);
-  }
-
   [a_str, b_str] = remove_common_suffix(a_str, b_str);
-
-  const a_tail = tailing_value(a_str);
-  if (!a_tail) {
+  for (;;) {
+    [a_str, b_str] = remove_common_prefix(a_str, b_str);
+    const a_num = parse_number(a_str);
+    const b_num = parse_number(b_str);
+    if (!isNaN(a_num) && !isNaN(b_num)) {
+      if (a_num < b_num) {
+        return -1;
+      }
+      if (a_num > b_num) {
+        return 1;
+      }
+      a_str = remove_number_prefix(a_str, a_num);
+      b_str = remove_number_prefix(b_str, b_num);
+      continue;
+    }
     return compare(a_str, b_str);
   }
-  const b_tail = tailing_value(b_str);
-  if (!b_tail) {
-    return compare(a_str, b_str);
+}
+
+/**
+ * only consider leading numbers:
+ * - "version-1.txt" -> NaN
+ * - "-1.txt" -> NaN
+ * - "1.txt" -> 1
+ *
+ * do not consider scientific notation:
+ * - "1e3" -> 1
+ *
+ * do not consider decimal point (only consider the first part of version in semver):
+ * - "1.2.3" -> 1
+ * - "1.2" -> 1
+ * - "1" -> 1
+ *
+ * skip leading zeros:
+ * - "0123" -> 123
+ *
+ *  treat non numeric characters as NaN:
+ * - "readme.md" -> NaN
+ */
+export function parse_number (s: string): number {
+  if (s.length === 0) {
+    return NaN;
   }
-  const [a_val, a_offset] = a_tail;
-  const [b_val, b_offset] = b_tail;
-
-  a_str = a_str.substring(0, a_offset);
-  b_str = b_str.substring(0, b_offset);
-
-  const acc = pretty_compare(a_str, b_str);
-  if (acc !== 0) {
-    return acc;
+  if (s[0] === '-') {
+    return NaN;
   }
+  return parseFloat(s.replace('e', ' ').replace('.', ' '));
+}
 
-  return compare(a_val, b_val);
+function remove_number_prefix (s: string, num: number): string {
+  if (num === 0) {
+    return s.replace(/^0+/, '');
+  }
+  return s.replace(/^0+/, '').slice(String(num).length);
 }
 
 // e.g. remove ".txt" suffix
@@ -79,6 +97,22 @@ function remove_common_suffix (a: string, b: string) {
   }
   a = a.substring(0, a.length - tail);
   b = b.substring(0, b.length - tail);
+  return [a, b];
+}
+
+// e.g. remove "version-" prefix
+function remove_common_prefix (a: string, b: string) {
+  const n = Math.min(a.length, b.length);
+  let prefix = 0;
+  for (let i = 0; i < n; i++) {
+    if (a[i] === b[i]) {
+      prefix++;
+    } else {
+      break;
+    }
+  }
+  a = a.substring(prefix);
+  b = b.substring(prefix);
   return [a, b];
 }
 

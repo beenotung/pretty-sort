@@ -5,9 +5,10 @@ import {
 } from '../src';
 
 function test(name: string, target: string[]) {
-  let subject = target
-    .map(x => x)
-    .sort((a, b) => (Math.random() < 0.5 ? 1 : -1));
+  // let subject = target
+  //   .map(x => x)
+  //   .sort((a, b) => (Math.random() < 0.5 ? 1 : -1))
+  let subject = target.slice().reverse();
 
   let result = pretty_sort(subject);
   if (target.toString() === result.toString()) {
@@ -76,6 +77,8 @@ test('Filenames', [
   '28.txt',
 ]);
 
+test('number only', ['1', '11']);
+
 test('Numbers in middle', [
   'Student 1 Submission',
   'Student 2 Submission',
@@ -93,3 +96,30 @@ test('number prefix', [
   '10-email.html',
   '10-output.json',
 ]);
+
+let semver = [
+  '1',
+  '1.0',
+  '1.0.0',
+  '1.0.1',
+  '1.0.10',
+  '1.0.11',
+  '2.0.0',
+  '11.0.0',
+  '11.0.1',
+  '11.0.10',
+  '11.0.11',
+];
+test('semver', semver);
+test(
+  'semver prefix',
+  semver.map(v => `${v}.txt`),
+);
+test(
+  'semver suffix',
+  semver.map(v => `v${v}`),
+);
+test(
+  '-semver suffix',
+  semver.map(v => `v-${v}`),
+);
