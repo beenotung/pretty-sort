@@ -1,8 +1,4 @@
-import {
-  disable_tailing_value_memorize,
-  enable_tailing_value_memorize,
-  pretty_sort,
-} from '../src';
+import { pretty_sort } from '../src';
 
 function test(name: string, target: string[]) {
   // let subject = target
@@ -19,9 +15,6 @@ function test(name: string, target: string[]) {
     process.exit(1);
   }
 }
-
-enable_tailing_value_memorize();
-disable_tailing_value_memorize();
 
 test('Groups', [
   'Group 1',
