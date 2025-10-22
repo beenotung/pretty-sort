@@ -27,9 +27,15 @@ export let tailing_value = (s: string): undefined | [number, number] => {
 
 /** @description helper function */
 export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
-  [a_str, b_str] = remove_common_suffix(a_str, b_str);
+  const suffix = count_common_suffix(a_str, b_str);
+  a_str = a_str.substring(0, a_str.length - suffix);
+  b_str = b_str.substring(0, b_str.length - suffix);
+
   for (;;) {
-    [a_str, b_str] = remove_common_prefix(a_str, b_str);
+    const prefix = count_common_prefix(a_str, b_str);
+    a_str = a_str.substring(prefix);
+    b_str = b_str.substring(prefix);
+
     const a_num = parse_number(a_str);
     const b_num = parse_number(b_str);
     if (!isNaN(a_num) && !isNaN(b_num)) {
@@ -84,8 +90,12 @@ function remove_number_prefix (s: string, num: number): string {
   return s.replace(/^0+/, '').slice(String(num).length);
 }
 
-// e.g. remove ".txt" suffix
-function remove_common_suffix (a: string, b: string) {
+/**
+ * @description helper function
+ * @return the number of common suffix
+ * e.g. ".txt" suffix -> 4
+ */
+export function count_common_suffix (a: string, b: string): number {
   const n = Math.min(a.length, b.length);
   let tail = 0;
   for (let i = 0; i < n; i++) {
@@ -95,13 +105,15 @@ function remove_common_suffix (a: string, b: string) {
       break;
     }
   }
-  a = a.substring(0, a.length - tail);
-  b = b.substring(0, b.length - tail);
-  return [a, b];
+  return tail;
 }
 
-// e.g. remove "version-" prefix
-function remove_common_prefix (a: string, b: string) {
+/**
+ * @description helper function
+ * @return the number of common prefix
+ * e.g. "version-" prefix -> 8
+ */
+export function count_common_prefix (a: string, b: string): number {
   const n = Math.min(a.length, b.length);
   let prefix = 0;
   for (let i = 0; i < n; i++) {
@@ -111,9 +123,7 @@ function remove_common_prefix (a: string, b: string) {
       break;
     }
   }
-  a = a.substring(prefix);
-  b = b.substring(prefix);
-  return [a, b];
+  return prefix;
 }
 
 /** @description main sorting function */
