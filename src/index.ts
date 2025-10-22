@@ -27,6 +27,17 @@ export let tailing_value = (s: string): undefined | [number, number] => {
 
 /** @description helper function */
 export function pretty_compare (a_str: string, b_str: string): 1 | 0 | -1 {
+  const a_num = parseFloat(a_str);
+  const b_num = parseFloat(b_str);
+  if (!isNaN(a_num) && !isNaN(b_num)) {
+    if (a_num < b_num) {
+      return -1;
+    }
+    if (a_num > b_num) {
+      return 1;
+    }
+  }
+
   if (a_str.length === 0 || b_str.length === 0) {
     return compare(a_str, b_str);
   }

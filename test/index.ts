@@ -84,3 +84,12 @@ test('Numbers in middle', [
   'Student 11 Submission',
   'Student 12 Submission',
 ]);
+
+test('number prefix', [
+  '1-email.html',
+  '1-output.json',
+  '2-email.html',
+  '2-output.json',
+  '10-email.html',
+  '10-output.json',
+]);
