@@ -2,66 +2,19 @@
 
 [![npm Package Version](https://img.shields.io/npm/v/pretty-sort.svg?maxAge=2592000)](https://www.npmjs.com/package/pretty-sort)
 
-sort string with awareness to tailing numeric value
+sort strings by their numeric parts, so `file2` comes before `file10` and `1.0.10` before `1.0.11`
 
 ## Example
 
-To sort below folder name:
+Given the folder names `Class 1`, `Class 2`, `Class 10`, `Group 1`, `Group 2` and `Group 10`, plain string comparison compares the digits one character at a time, so `Class 10` lands before `Class 2`:
 
-    Class 1
-    Class 2
-    Class 3
-    Class 4
-    Class 10
-    Class 11
-    Class 12
-    Class 13
-    Group 1
-    Group 2
-    Group 3
-    Group 4
-    Group 10
-    Group 11
-    Group 12
+    Class 1, Class 10, Class 2, Group 1, Group 10, Group 2
 
-If we sort it by by default string comparison, we will get:
+`pretty_sort` compares the numeric part by value instead:
 
-    Class 1
-    Class 10
-    Class 11
-    Class 12
-    Class 13
-    Class 2
-    Class 3
-    Class 4
-    Group 1
-    Group 10
-    Group 11
-    Group 12
-    Group 2
-    Group 3
-    Group 4
+    Class 1, Class 2, Class 10, Group 1, Group 2, Group 10
 
-This algorithm will extract the numeric value in the tailing of string,
-and sort the element by the prefix, then the numeric value.
-
-Hence we will get:
-
-    Class 1
-    Class 2
-    Class 3
-    Class 4
-    Class 10
-    Class 11
-    Class 12
-    Class 13
-    Group 1
-    Group 2
-    Group 3
-    Group 4
-    Group 10
-    Group 11
-    Group 12
+Each name is split into numeric and text runs; numbers compare by value and text by character, so `class-3-student-5` sorts by class number, then by student number. Matching is exact, so `Class 2` and `class 2` are different groups.
 
 ## Usage Example
 
@@ -96,26 +49,23 @@ console.log(list2)
 ## Typescript Signature
 
 ```typescript
-/** @description main sorting function */
+/** @description main sorting function; sorts in place and returns the same array */
 export function pretty_sort(xs: string[]): string[]
 
-/** @description speed up sorting by caching the comparison result, it consumes some memory */
-export function enable_tailing_value_memorize(): void
-
-/** @description free up the memory used to cache comparison result */
-export function disable_tailing_value_memorize(): void
+/** @description the comparator behind pretty_sort */
+export function pretty_compare(a_str: string, b_str: string): 1 | 0 | -1
 
 /** @description helper function */
 export function compare(a: any, b: any): 1 | 0 | -1
 
-/**
- * @description helper function
- * @return [numeric value, offset of last non-numeric char]
- * */
-export let tailing_value: (s: string) => undefined | [number, number]
+/** @description leading number of a name, or NaN when it does not start with one */
+export function parse_number(s: string): number
 
-/** @description helper function */
-export function pretty_compare(a_str: string, b_str: string): 1 | 0 | -1
+/** @description number of characters shared with another name, counted from the start */
+export function count_common_prefix(a: string, b: string): number
+
+/** @description number of characters shared with another name, counted from the end */
+export function count_common_suffix(a: string, b: string): number
 ```
 
 ## License
