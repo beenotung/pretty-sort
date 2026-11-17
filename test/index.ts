@@ -1,4 +1,4 @@
-import { pretty_sort } from '../src';
+import { pretty_compare, pretty_sort } from '../src';
 
 function test(name: string, target: string[]) {
   // let subject = target
@@ -116,3 +116,31 @@ test(
   '-semver suffix',
   semver.map(v => `v-${v}`),
 );
+
+function check_antisymmetry(name: string, a: string, b: string) {
+  // both directions must return; the old for(;;) loop spun on the dead-loop pair
+  const forward = pretty_compare(a, b);
+  const backward = pretty_compare(b, a);
+  if (forward === -backward) {
+    console.log('passed:', name);
+  } else {
+    console.error('failed, directions disagree:');
+    console.error({ a, b, forward, backward });
+    process.exit(1);
+  }
+}
+
+test('numeric order', ['file2', 'file10']);
+
+test('version order', ['1.0.10', '1.0.11']);
+
+// '1' and '01' are equal by value, so the digit runs compare by their text and
+// the zero-padded name comes first
+test('zero padded', ['01', '1']);
+
+test('dead loop pair', [' 0.', '.0']);
+
+// the loop was a fixed point, so both directions have to return
+check_antisymmetry('dead loop pair both ways', '.0', ' 0.');
+
+check_antisymmetry('antisymmetry', '1', '01');
