@@ -6,16 +6,16 @@ let failed = 0;
 function test(input: string, expected: number) {
   let result = parse_number(input);
   if (isNaN(result) && isNaN(expected)) {
-    console.log(`[passed] ${input} -> ${result}`);
+    console.log(`passed: ${input} -> ${result}`);
     passed++;
     return;
   }
   if (result === expected) {
-    console.log(`[passed] ${input} -> ${result}`);
+    console.log(`passed: ${input} -> ${result}`);
     passed++;
     return;
   }
-  console.log(`[failed] ${input} -> ${result}`);
+  console.log(`failed: ${input} -> ${result}`);
   failed++;
 }
 
